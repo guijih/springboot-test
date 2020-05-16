@@ -1,35 +1,32 @@
 package com.example.springboot.redis;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.util.HashMap;
 
-/**
- * Created by makersy on 2019
- */
-
-@Component
-@ConfigurationProperties(prefix = "spring.redis")
-@Getter
-@Setter
-@NoArgsConstructor
+@Configuration
 public class RedisConfig {
 
-    private String host;
+    @Bean
+    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
 
-    private int port;
 
-    /**
-     * 秒
-     */
-    private int timeout;
-
-    private String password;
-
-    private HashMap<String, String> pool = new HashMap<>();
+        // 自定义Redis序列化器
+        Jackson2JsonRedisSerializer jdkSerializationRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        // 定义RedisTemplate，并设置连接工程
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(factory);
+        // 设置序列化器
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setValueSerializer(jdkSerializationRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashValueSerializer(jdkSerializationRedisSerializer);
+        return redisTemplate;
+    }
 
 }

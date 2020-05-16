@@ -1,6 +1,7 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.eneity.User;
+import com.example.springboot.redis.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.service.UserService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -25,8 +27,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Resource
+    private RedisUtils redisUtils;
+
+
     @GetMapping("/users")
     public List<User> lists() {
+
+
+        redisUtils.set("test", "王伟");
+
         log.info("infor" + "2");
 
         log.debug("debug" + "2");
