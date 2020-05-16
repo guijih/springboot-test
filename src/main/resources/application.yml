@@ -1,7 +1,7 @@
 server:
   port: 8888
   servlet:
-    context-path: /springboot-demo
+    context-path: /
 spring:
    datasource:
       url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -35,7 +35,9 @@ spring:
       # 配置监控统计拦截的filters，去掉后监控界面sql无法统计
       druid.filters: stat,wall
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      druid.connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      druid.connection-properties:
+          druid.stat.mergeSql： true
+          druid.stat.slowSqlMillis： 500
       # 合并多个DruidDataSource的监控数据
       druid.use-global-data-source-stat: true
       # druid连接池监控
