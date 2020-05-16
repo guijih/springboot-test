@@ -52,6 +52,23 @@ mybatis:
      map-underscore-to-camel-case: true
 
 
+pring:
+  # redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3
+    # password:
+    pool:
+      minIdle: 1
+      maxIdle: 10
+      maxWait: 3
+      maxActive: 8
+
+
+
+
+
 
 
 
