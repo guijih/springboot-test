@@ -2,10 +2,14 @@ package com.example.springboot.controller;
 
 import com.example.springboot.eneity.User;
 import com.example.springboot.redis.RedisUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.springboot.service.UserService;
 
@@ -18,6 +22,7 @@ import java.util.List;
  * @Author sgl
  * @Date 2018-05-02 14:59
  */
+@Api(value = "用户管理", tags = {"用户管理"})
 @RestController
 public class UserController {
 
@@ -31,8 +36,10 @@ public class UserController {
     private RedisUtils redisUtils;
 
 
-    @GetMapping("/users")
-    public List<User> lists() {
+
+    @ApiOperation("登录查找用户")
+    @GetMapping("/users/{id}")
+    public List<User> lists(@ApiParam("公司id") @PathVariable String id) {
 
 
         redisUtils.set("test", "王伟");
